@@ -4,6 +4,7 @@ exports.blogsRouter = void 0;
 const express_1 = require("express");
 //import {blogsRouter} from "./blogs-route";
 const express_validator_1 = require("express-validator");
+const input_validation_middleware_1 = require("../input-validation-middleware/input-validation-middleware");
 exports.blogsRouter = (0, express_1.Router)({});
 const nameValidation = (0, express_validator_1.body)('name').trim().isLength({ min: 1, max: 15 }).withMessage({ "message": "wrong name", "field": "name" });
 const descriptionValidation = (0, express_validator_1.body)('description').trim().isLength({ min: 1, max: 500 }).withMessage({ "message": "wrong description", "field": "description" });
@@ -39,11 +40,7 @@ exports.blogsRouter.get('/', (req, res) => {
     res.status(200).send(blogs);
 });
 // POST add blogs
-exports.blogsRouter.post('/', nameValidation, descriptionValidation, websiteUrlValidation, (req, res) => {
-    const errors = (0, express_validator_1.validationResult)(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+exports.blogsRouter.post('/', nameValidation, descriptionValidation, websiteUrlValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
     const newBlog = {
         "id": (+(new Date())).toString(),
         "name": req.body.name,

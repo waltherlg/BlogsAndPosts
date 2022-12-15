@@ -1,6 +1,7 @@
 import {Request, Response, Router} from "express";
 //import {blogsRouter} from "./blogs-route";
 import {body, validationResult} from "express-validator";
+import {inputValidationMiddleware} from "../input-validation-middleware/input-validation-middleware";
 
 export const blogsRouter = Router({})
 
@@ -48,11 +49,8 @@ blogsRouter.post('/',
     nameValidation,
     descriptionValidation,
     websiteUrlValidation,
+    inputValidationMiddleware,
     (req: Request, res: Response) => {
-        const  errors = validationResult(req)
-        if (!errors.isEmpty()){
-            return res.status(400).json({errors: errors.array()})
-        }
         const newBlog = {
             "id": (+(new Date())).toString(),
             "name": req.body.name,
