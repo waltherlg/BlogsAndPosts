@@ -3,6 +3,7 @@ import {Request, Response, Router} from "express";
 
 export const videosRouter = Router({})
 
+
 type availableResolutionsType = Array<string>
 
 type videoType ={

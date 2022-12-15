@@ -1,5 +1,4 @@
-
-
+"use strict";
 let posts = [
     {
         "id": "1",
@@ -19,4 +18,4 @@ let posts = [
         "description": "description3",
         "websiteUrl": "websiteUrl"
     }
-]
+];

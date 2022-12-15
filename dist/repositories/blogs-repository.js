@@ -1,6 +1,5 @@
-
+"use strict";
 let blogs = [
-
     {
         "id": "1",
         "title": "music",
@@ -25,5 +24,4 @@ let blogs = [
         "blogId": "blogId3",
         "blogName": "blogName3"
     },
-
-]
+];
