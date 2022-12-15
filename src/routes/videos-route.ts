@@ -4,6 +4,7 @@ import {Request, Response, Router} from "express";
 export const videosRouter = Router({})
 
 type availableResolutionsType = Array<string>
+
 type videoType ={
     id:	number
     title:	string
@@ -14,7 +15,6 @@ type videoType ={
     publicationDate: string
     availableResolutions: availableResolutionsType
 }
-
 
 let videos: Array<videoType> = [];
 const resolutions: Array<string> = ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"];
