@@ -35,6 +35,9 @@ let blogs = [
         "blogName": "blogName3"
     },
 ];
+exports.blogsRouter.get('/test', (req, res) => {
+    res.status(200).send(blogs);
+});
 // GET Returns All blogs
 exports.blogsRouter.get('/', (req, res) => {
     res.status(200).send(blogs);

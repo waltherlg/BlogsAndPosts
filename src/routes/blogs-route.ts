@@ -39,6 +39,10 @@ let blogs = [
 
 ]
 
+blogsRouter.get('/test', (req: Request, res: Response) => {
+    res.status(200).send(blogs);
+})
+
 // GET Returns All blogs
 blogsRouter.get('/', (req: Request, res: Response) => {
     res.status(200).send(blogs);
