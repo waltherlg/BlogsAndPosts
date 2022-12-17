@@ -8,6 +8,8 @@ const videos_route_1 = require("./routes/videos-route");
 const blogs_route_1 = require("./routes/blogs-route");
 const posts_route_1 = require("./routes/posts-route");
 const bodyParser = require('body-parser');
+const fs = require("fs");
+var path = require('path');
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(bodyParser.json());

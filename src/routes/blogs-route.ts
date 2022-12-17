@@ -1,7 +1,8 @@
 import {Request, Response, Router} from "express";
 //import {blogsRouter} from "./blogs-route";
 import {body, validationResult} from "express-validator";
-import {inputValidationMiddleware} from "../input-validation-middleware/input-validation-middleware";
+import {inputValidationMiddleware} from "../middlewares/input-validation-middleware/input-validation-middleware";
+import {basicAuthMiddleware} from "../middlewares/basic-auth.middleware";
 
 export const blogsRouter = Router({})
 
@@ -38,24 +39,26 @@ let blogs = [
     },
 
 ]
-
+let userAut = false
 blogsRouter.get('/test', (req: Request, res: Response) => {
-    res.status(200).send(blogs);
+        res.status(200).send(blogs);
 })
 
 // GET Returns All blogs
+
 blogsRouter.get('/', (req: Request, res: Response) => {
     res.status(200).send(blogs);
 })
 
 // POST add blogs
 blogsRouter.post('/',
+    basicAuthMiddleware,
     nameValidation,
     descriptionValidation,
     websiteUrlValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
-        const newBlog = {
+        const newBlog: any = {
             "id": (+(new Date())).toString(),
             "name": req.body.name,
             "description": req.body.description,
@@ -63,9 +66,5 @@ blogsRouter.post('/',
         }
         blogs.push(newBlog)
         res.status(201).send(newBlog)
-
-
-
-
 
 })
