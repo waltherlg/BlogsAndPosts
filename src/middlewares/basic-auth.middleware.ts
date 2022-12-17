@@ -11,11 +11,13 @@ export const basicAuthMiddleware = (req: Request, res: Response, next: NextFunct
     // if (authType !== 'Basic') return res.sendStatus(401)
     // if (authData !== 'YWRtaW46cXdlcnR5') return res.sendStatus(401)
 
-    const authheader = req.headers.authorization;
-    if (!authheader) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
         return res.status(401).send("Unauthorized")
     }
-    let auth =  Buffer.from(authheader.split(' ')[1],
+    const authType = authHeader.split(' ')[0]
+    if (authType !== 'Basic') return res.sendStatus(401)
+    let auth =  Buffer.from(authHeader.split(' ')[1],
         'base64').toString().split(':');
     let user = auth[0];
     let pass = auth[1];

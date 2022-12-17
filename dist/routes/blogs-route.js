@@ -12,29 +12,23 @@ const descriptionValidation = (0, express_validator_1.body)('description').trim(
 const websiteUrlValidation = (0, express_validator_1.body)('websiteUrl').trim().isLength({ min: 1, max: 100 }).withMessage({ "message": "wrong websiteUrl", "field": "websiteUrl" });
 let blogs = [
     {
-        "id": "1",
-        "title": "music",
-        "shortDescription": "blog of music",
-        "content": "content1",
-        "blogId": "blogId2",
-        "blogName": "Bob's trambon"
+        "id": "firstblog",
+        "name": "name1",
+        "description": "description1",
+        "websiteUrl": "websiteUrl"
     },
     {
         "id": "2",
-        "title": "title2",
-        "shortDescription": "shortDescription2",
-        "content": "content2",
-        "blogId": "blogId2",
-        "blogName": "blogName2"
+        "name": "name2",
+        "description": "description2",
+        "websiteUrl": "websiteUrl"
     },
     {
         "id": "3",
-        "title": "title3",
-        "shortDescription": "shortDescription2",
-        "content": "content3",
-        "blogId": "blogId3",
-        "blogName": "blogName3"
-    },
+        "name": "name3",
+        "description": "description3",
+        "websiteUrl": "websiteUrl"
+    }
 ];
 let userAut = false;
 exports.blogsRouter.get('/test', (req, res) => {
@@ -50,8 +44,41 @@ exports.blogsRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, nameV
         "id": (+(new Date())).toString(),
         "name": req.body.name,
         "description": req.body.description,
-        "websiteUrl": req.body.description
+        "websiteUrl": req.body.websiteUrl
     };
     blogs.push(newBlog);
     res.status(201).send(newBlog);
+});
+//GET
+exports.blogsRouter.get('/:id', (req, res) => {
+    let blog = blogs.find(b => b.id == req.params.id);
+    if (blog) {
+        res.status(200).send(blog);
+        return;
+    }
+    else {
+        res.send(404);
+    }
+});
+// DELETE blog video by id
+exports.blogsRouter.delete('/:id', basic_auth_middleware_1.basicAuthMiddleware, (req, res) => {
+    for (let i = 0; i < blogs.length; i++) {
+        if (blogs[i].id === req.params.id) {
+            blogs.splice(i, 1);
+            res.send(204);
+            return;
+        }
+    }
+    res.send(404);
+});
+// PUT update blogs by id
+exports.blogsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, nameValidation, descriptionValidation, websiteUrlValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
+    let blog = blogs.find(b => b.id === req.params.id);
+    if (blog) {
+        blog.name = req.body.name;
+        blog.description = req.body.description;
+        blog.websiteUrl = req.body.websiteUrl;
+        res.status(200).send(blog);
+        return;
+    }
 });

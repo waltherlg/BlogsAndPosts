@@ -5,21 +5,27 @@ const express_1 = require("express");
 exports.postsRouter = (0, express_1.Router)({});
 let posts = [
     {
-        "id": "1",
-        "name": "name1",
-        "description": "description1",
-        "websiteUrl": "websiteUrl"
+        "id": "firstblog",
+        "title": "music",
+        "shortDescription": "blog of music",
+        "content": "content1",
+        "blogId": "blogId2",
+        "blogName": "Bob's trambon"
     },
     {
         "id": "2",
-        "name": "name2",
-        "description": "description2",
-        "websiteUrl": "websiteUrl"
+        "title": "title2",
+        "shortDescription": "shortDescription2",
+        "content": "content2",
+        "blogId": "blogId2",
+        "blogName": "blogName2"
     },
     {
         "id": "3",
-        "name": "name3",
-        "description": "description3",
-        "websiteUrl": "websiteUrl"
-    }
+        "title": "title3",
+        "shortDescription": "shortDescription2",
+        "content": "content3",
+        "blogId": "blogId3",
+        "blogName": "blogName3"
+    },
 ];

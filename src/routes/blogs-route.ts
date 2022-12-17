@@ -3,6 +3,7 @@ import {Request, Response, Router} from "express";
 import {body, validationResult} from "express-validator";
 import {inputValidationMiddleware} from "../middlewares/input-validation-middleware/input-validation-middleware";
 import {basicAuthMiddleware} from "../middlewares/basic-auth.middleware";
+import {videosRouter} from "./videos-route";
 
 export const blogsRouter = Router({})
 
@@ -11,33 +12,32 @@ const nameValidation = body('name').trim().isLength({min: 1, max: 15}).withMessa
 const descriptionValidation = body('description').trim().isLength({min: 1, max: 500}).withMessage({"message": "wrong description", "field": "description" })
 const websiteUrlValidation = body('websiteUrl').trim().isLength({min: 1, max: 100}).withMessage({"message": "wrong websiteUrl", "field": "websiteUrl" })
 
+type blogType = {
+    id: string,
+    name: string,
+    description: string,
+    websiteUrl: string
+}
 
-let blogs = [
+let blogs: Array<blogType> = [
     {
-        "id": "1",
-        "title": "music",
-        "shortDescription": "blog of music",
-        "content": "content1",
-        "blogId": "blogId2",
-        "blogName": "Bob's trambon"
+        "id": "firstblog",
+        "name": "name1",
+        "description": "description1",
+        "websiteUrl": "websiteUrl"
     },
     {
         "id": "2",
-        "title": "title2",
-        "shortDescription": "shortDescription2",
-        "content": "content2",
-        "blogId": "blogId2",
-        "blogName": "blogName2"
+        "name": "name2",
+        "description": "description2",
+        "websiteUrl": "websiteUrl"
     },
     {
         "id": "3",
-        "title": "title3",
-        "shortDescription": "shortDescription2",
-        "content": "content3",
-        "blogId": "blogId3",
-        "blogName": "blogName3"
-    },
-
+        "name": "name3",
+        "description": "description3",
+        "websiteUrl": "websiteUrl"
+    }
 ]
 let userAut = false
 blogsRouter.get('/test', (req: Request, res: Response) => {
@@ -62,9 +62,55 @@ blogsRouter.post('/',
             "id": (+(new Date())).toString(),
             "name": req.body.name,
             "description": req.body.description,
-            "websiteUrl": req.body.description
+            "websiteUrl": req.body.websiteUrl
         }
         blogs.push(newBlog)
         res.status(201).send(newBlog)
+
+})
+
+//GET
+blogsRouter.get('/:id', (req, res) => {
+    let blog = blogs.find(b => b.id == req.params.id);
+    if (blog) {
+        res.status(200).send(blog);
+        return
+    }
+    else {
+        res.send(404);
+    }
+})
+
+// DELETE blog video by id
+blogsRouter.delete('/:id',
+    basicAuthMiddleware,
+    (req, res) => {
+    for (let i = 0; i < blogs.length; i++){
+        if (blogs[i].id === req.params.id){
+            blogs.splice(i, 1);
+            res.send(204);
+            return;
+        }
+    }
+    res.send(404);
+})
+
+// PUT update blogs by id
+blogsRouter.put('/:id',
+    basicAuthMiddleware,
+    nameValidation,
+    descriptionValidation,
+    websiteUrlValidation,
+    inputValidationMiddleware,
+    (req, res) => {
+    let blog = blogs.find(b => b.id === req.params.id);
+    if (blog) {
+        blog.name = req.body.name
+        blog.description = req.body.description
+        blog.websiteUrl = req.body.websiteUrl
+        res.status(200).send(blog)
+        return
+    }
+
 
 })
