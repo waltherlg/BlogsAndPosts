@@ -102,9 +102,12 @@ postsRouter.put('/:id',
         const updatePost = postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
         if (updatePost){
             // const post = blogsRepository.getBlogByID(req.params.id)
-            return res.send(200)
+            res.send(200)
         }
-        res.status(404)
+        else {
+            res.status(404)
+        }
+
 
         // let post = posts.find(p => p.id === req.params.id);
         // if (post) {

@@ -84,9 +84,11 @@ exports.postsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, tit
     const updatePost = posts_repository_1.postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId);
     if (updatePost) {
         // const post = blogsRepository.getBlogByID(req.params.id)
-        return res.send(200);
+        res.send(200);
     }
-    res.status(404);
+    else {
+        res.status(404);
+    }
     // let post = posts.find(p => p.id === req.params.id);
     // if (post) {
     //     post.title = req.body.title,
