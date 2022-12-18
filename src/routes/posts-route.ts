@@ -2,9 +2,9 @@ import {Request, Response, Router} from "express";
 import {body, validationResult} from "express-validator";
 import {inputValidationMiddleware} from "../middlewares/input-validation-middleware/input-validation-middleware";
 import {basicAuthMiddleware} from "../middlewares/basic-auth.middleware";
-import {blogsRouter} from "./blogs-route";
+
 import {postsRepository} from "../repositories/posts-repository";
-import {blogsRepository} from "../repositories/blogs-repository";
+
 export const postsRouter = Router({})
 
 const titleValidation = body('title').trim().isLength({min: 1, max: 30}).withMessage({"message": "wrong title", "field": "title" })

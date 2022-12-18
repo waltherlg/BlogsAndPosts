@@ -67,5 +67,8 @@ exports.postsRepository = {
             }
         }
         return false;
+    },
+    deleteAllPosts() {
+        posts.splice(0);
     }
 };

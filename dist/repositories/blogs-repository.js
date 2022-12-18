@@ -58,5 +58,8 @@ exports.blogsRepository = {
             }
         }
         return false;
+    },
+    deleteAllBlogs() {
+        blogs.splice(0);
     }
 };

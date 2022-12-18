@@ -70,6 +70,10 @@ export const blogsRepository = {
         return false
 
 
+    },
+
+    deleteAllBlogs() {
+        blogs.splice(0);
     }
 }
 
