@@ -1,5 +1,5 @@
 {
-  "name": "BlogsAndPosts",
+  "name": "blogs_and_posts",
   "version": "1.0.0",
   "main": "src/index.ts",
   "license": "MIT",
