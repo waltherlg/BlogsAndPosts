@@ -5,12 +5,23 @@ const express_1 = require("express");
 const express_validator_1 = require("express-validator");
 const input_validation_middleware_1 = require("../middlewares/input-validation-middleware/input-validation-middleware");
 const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
+const posts_repository_1 = require("../repositories/posts-repository");
 exports.postsRouter = (0, express_1.Router)({});
 const titleValidation = (0, express_validator_1.body)('title').trim().isLength({ min: 1, max: 30 }).withMessage({ "message": "wrong title", "field": "title" });
 const shortDescriptionValidation = (0, express_validator_1.body)('shortDescription').trim().isLength({ min: 1, max: 100 }).withMessage({ "message": "wrong shortDescription", "field": "shortDescription" });
 const contentValidation = (0, express_validator_1.body)('content').trim().isLength({ min: 1, max: 1000 }).withMessage({ "message": "wrong content", "field": "content" });
 const blogIdValidation = (0, express_validator_1.body)('blogId').trim().isLength({ min: 1, max: 1000 }).withMessage({ "message": "wrong blogId", "field": "blogId" });
-let posts = [
+/*
+type postType = {
+    id: string,
+    title: string,
+    shortDescription: string,
+    content: string,
+    blogId: string,
+    blogName: string
+}
+
+let posts: Array<postType> = [
     {
         "id": "firspost",
         "title": "music",
@@ -35,56 +46,73 @@ let posts = [
         "blogId": "blogId3",
         "blogName": "blogName3"
     },
-];
+
+]
+*/
 // GET Returns All posts
 exports.postsRouter.get('/', (req, res) => {
-    res.status(200).send(posts);
+    const allPosts = posts_repository_1.postsRepository.getAllPosts();
+    res.status(200).send(allPosts);
 });
 //GET return post bi id
 exports.postsRouter.get('/:id', (req, res) => {
-    let post = posts.find(p => p.id == req.params.id);
-    if (post) {
-        res.status(200).send(post);
-        return;
+    let foundPost = posts_repository_1.postsRepository.getPostByID(req.params.id.toString());
+    if (foundPost) {
+        res.status(200).send(foundPost);
     }
     else {
-        res.send(404);
+        res.status(404);
     }
 });
 // POST add blogs
 exports.postsRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, titleValidation, shortDescriptionValidation, contentValidation, blogIdValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
-    const newPost = {
-        "id": (+(new Date())).toString(),
-        "title": req.body.title,
-        "shortDescription": req.body.shortDescription,
-        "content": req.body.content,
-        "blogId": req.body.blogId,
-        "blogName": req.body.content + " " + req.body.title
-    };
-    posts.push(newPost);
+    const newPost = posts_repository_1.postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId);
     res.status(201).send(newPost);
+    // const newPost: any = {
+    //     "id": (+(new Date())).toString(),
+    //     "title": req.body.title,
+    //     "shortDescription": req.body.shortDescription,
+    //     "content": req.body.content,
+    //     "blogId": req.body.blogId,
+    //     "blogName": req.body.content + " " + req.body.title
+    // }
+    // posts.push(newPost)
+    // res.status(201).send(newPost)
 });
 // PUT update post
 exports.postsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, titleValidation, shortDescriptionValidation, contentValidation, blogIdValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
-    let post = posts.find(p => p.id === req.params.id);
-    if (post) {
-        post.title = req.body.title,
-            post.shortDescription = req.body.shortDescription,
-            post.content = req.body.content,
-            post.blogId = req.body.blogId;
-        res.status(201).send(post);
-        return;
+    const updatePost = posts_repository_1.postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId);
+    if (updatePost) {
+        // const post = blogsRepository.getBlogByID(req.params.id)
+        return res.send(200);
     }
     res.status(404);
+    // let post = posts.find(p => p.id === req.params.id);
+    // if (post) {
+    //     post.title = req.body.title,
+    //     post.shortDescription = req.body.shortDescription,
+    //     post.content = req.body.content,
+    //     post.blogId = req.body.blogId
+    //     res.status(201).send(post)
+    //     return
+    // }
+    // res.status(404)
 });
 // DELETE post
 exports.postsRouter.delete('/:id', basic_auth_middleware_1.basicAuthMiddleware, (req, res) => {
-    for (let i = 0; i < posts.length; i++) {
-        if (posts[i].id === req.params.id) {
-            posts.splice(i, 1);
-            res.send(204);
-            return;
-        }
+    const isDeleted = posts_repository_1.postsRepository.deletePost(req.params.id);
+    if (isDeleted) {
+        return res.send(204);
     }
+    else {
+        res.send(404);
+    }
+    // for (let i = 0; i < posts.length; i++){
+    //     if (posts[i].id === req.params.id){
+    //         posts.splice(i, 1);
+    //         res.send(204);
+    //         return;
+    //     }
+    // }
     res.send(404);
 });

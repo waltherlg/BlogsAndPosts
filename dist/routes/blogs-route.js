@@ -11,29 +11,36 @@ exports.blogsRouter = (0, express_1.Router)({});
 const nameValidation = (0, express_validator_1.body)('name').exists().trim().isLength({ max: 15 }).withMessage({ "message": "wrong name", "field": "name" });
 const descriptionValidation = (0, express_validator_1.body)('description').exists().trim().isLength({ max: 500 }).withMessage({ "message": "wrong description", "field": "description" });
 const websiteUrlValidation = (0, express_validator_1.body)('websiteUrl').exists().trim().isLength({ max: 100 }).isURL().withMessage({ "message": "wrong websiteUrl", "field": "websiteUrl" });
-let blogs = [
-/*
-{
-    "id": "firstblog",
-    "name": "name1",
-    "description": "description1",
-    "websiteUrl": "websiteUrl"
-},
-{
-    "id": "2",
-    "name": "name2",
-    "description": "description2",
-    "websiteUrl": "websiteUrl"
-},
-{
-    "id": "3",
-    "name": "name3",
-    "description": "description3",
-    "websiteUrl": "websiteUrl"
-}
-
- */
-];
+// type blogType = {
+//     id: string,
+//     name: string,
+//     description: string,
+//     websiteUrl: string
+// }
+//
+// let blogs: Array<blogType> = [
+//     /*
+//     {
+//         "id": "firstblog",
+//         "name": "name1",
+//         "description": "description1",
+//         "websiteUrl": "websiteUrl"
+//     },
+//     {
+//         "id": "2",
+//         "name": "name2",
+//         "description": "description2",
+//         "websiteUrl": "websiteUrl"
+//     },
+//     {
+//         "id": "3",
+//         "name": "name3",
+//         "description": "description3",
+//         "websiteUrl": "websiteUrl"
+//     }
+//
+//      */
+// ]
 // GET Returns All blogs
 exports.blogsRouter.get('/', (req, res) => {
     const allblogs = blogs_repository_1.blogsRepository.getAllBlogs();

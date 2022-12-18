@@ -13,36 +13,36 @@ const nameValidation = body('name').exists().trim().isLength({max: 15}).withMess
 const descriptionValidation = body('description').exists().trim().isLength({max: 500}).withMessage({"message": "wrong description", "field": "description" })
 const websiteUrlValidation = body('websiteUrl').exists().trim().isLength({max: 100}).isURL().withMessage({"message": "wrong websiteUrl", "field": "websiteUrl" })
 
-type blogType = {
-    id: string,
-    name: string,
-    description: string,
-    websiteUrl: string
-}
-
-let blogs: Array<blogType> = [
-    /*
-    {
-        "id": "firstblog",
-        "name": "name1",
-        "description": "description1",
-        "websiteUrl": "websiteUrl"
-    },
-    {
-        "id": "2",
-        "name": "name2",
-        "description": "description2",
-        "websiteUrl": "websiteUrl"
-    },
-    {
-        "id": "3",
-        "name": "name3",
-        "description": "description3",
-        "websiteUrl": "websiteUrl"
-    }
-
-     */
-]
+// type blogType = {
+//     id: string,
+//     name: string,
+//     description: string,
+//     websiteUrl: string
+// }
+//
+// let blogs: Array<blogType> = [
+//     /*
+//     {
+//         "id": "firstblog",
+//         "name": "name1",
+//         "description": "description1",
+//         "websiteUrl": "websiteUrl"
+//     },
+//     {
+//         "id": "2",
+//         "name": "name2",
+//         "description": "description2",
+//         "websiteUrl": "websiteUrl"
+//     },
+//     {
+//         "id": "3",
+//         "name": "name3",
+//         "description": "description3",
+//         "websiteUrl": "websiteUrl"
+//     }
+//
+//      */
+// ]
 
 // GET Returns All blogs
 blogsRouter.get('/', (req: Request, res: Response) => {
