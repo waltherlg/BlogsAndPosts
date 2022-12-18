@@ -1,29 +1,33 @@
 
-let blogs = [
+type blogType = {
+    id: string,
+    name: string,
+    description: string,
+    websiteUrl: string
+}
 
+let blogs: Array<blogType> = [
     {
-        "id": "1",
-        "title": "music",
-        "shortDescription": "blog of music",
-        "content": "content1",
-        "blogId": "blogId2",
-        "blogName": "Bob's trambon"
+        "id": "firstblog",
+        "name": "name1",
+        "description": "description1",
+        "websiteUrl": "websiteUrl"
     },
     {
         "id": "2",
-        "title": "title2",
-        "shortDescription": "shortDescription2",
-        "content": "content2",
-        "blogId": "blogId2",
-        "blogName": "blogName2"
+        "name": "name2",
+        "description": "description2",
+        "websiteUrl": "websiteUrl"
     },
     {
         "id": "3",
-        "title": "title3",
-        "shortDescription": "shortDescription2",
-        "content": "content3",
-        "blogId": "blogId3",
-        "blogName": "blogName3"
-    },
-
+        "name": "name3",
+        "description": "description3",
+        "websiteUrl": "websiteUrl"
+    }
 ]
+
+export const blogsRepository = {
+
+}
+
