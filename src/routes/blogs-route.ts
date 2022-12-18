@@ -8,9 +8,9 @@ import {videosRouter} from "./videos-route";
 export const blogsRouter = Router({})
 
 
-const nameValidation = body('name').trim().isLength({min: 1, max: 15}).withMessage({"message": "wrong name", "field": "name" })
-const descriptionValidation = body('description').trim().isLength({min: 1, max: 500}).withMessage({"message": "wrong description", "field": "description" })
-const websiteUrlValidation = body('websiteUrl').trim().isLength({min: 1, max: 100}).withMessage({"message": "wrong websiteUrl", "field": "websiteUrl" })
+const nameValidation = body('name').exists().trim().isLength({max: 15}).withMessage({"message": "wrong name", "field": "name" })
+const descriptionValidation = body('description').exists().trim().isLength({max: 500}).withMessage({"message": "wrong description", "field": "description" })
+const websiteUrlValidation = body('websiteUrl').exists().trim().isLength({max: 100}).isURL().withMessage({"message": "wrong websiteUrl", "field": "websiteUrl" })
 
 type blogType = {
     id: string,
@@ -40,12 +40,8 @@ let blogs: Array<blogType> = [
     }
 ]
 let userAut = false
-blogsRouter.get('/test', (req: Request, res: Response) => {
-        res.status(200).send(blogs);
-})
 
 // GET Returns All blogs
-
 blogsRouter.get('/', (req: Request, res: Response) => {
     res.status(200).send(blogs);
 })
@@ -69,7 +65,7 @@ blogsRouter.post('/',
 
 })
 
-//GET
+//GET blog buy id
 blogsRouter.get('/:id', (req, res) => {
     let blog = blogs.find(b => b.id == req.params.id);
     if (blog) {
@@ -111,6 +107,7 @@ blogsRouter.put('/:id',
         res.status(200).send(blog)
         return
     }
+    res.status(404)
 
 
 })

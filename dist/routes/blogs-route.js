@@ -7,9 +7,9 @@ const express_validator_1 = require("express-validator");
 const input_validation_middleware_1 = require("../middlewares/input-validation-middleware/input-validation-middleware");
 const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
 exports.blogsRouter = (0, express_1.Router)({});
-const nameValidation = (0, express_validator_1.body)('name').trim().isLength({ min: 1, max: 15 }).withMessage({ "message": "wrong name", "field": "name" });
-const descriptionValidation = (0, express_validator_1.body)('description').trim().isLength({ min: 1, max: 500 }).withMessage({ "message": "wrong description", "field": "description" });
-const websiteUrlValidation = (0, express_validator_1.body)('websiteUrl').trim().isLength({ min: 1, max: 100 }).withMessage({ "message": "wrong websiteUrl", "field": "websiteUrl" });
+const nameValidation = (0, express_validator_1.body)('name').exists().trim().isLength({ max: 15 }).withMessage({ "message": "wrong name", "field": "name" });
+const descriptionValidation = (0, express_validator_1.body)('description').exists().trim().isLength({ max: 500 }).withMessage({ "message": "wrong description", "field": "description" });
+const websiteUrlValidation = (0, express_validator_1.body)('websiteUrl').exists().trim().isLength({ max: 100 }).isURL().withMessage({ "message": "wrong websiteUrl", "field": "websiteUrl" });
 let blogs = [
     {
         "id": "firstblog",
@@ -31,9 +31,6 @@ let blogs = [
     }
 ];
 let userAut = false;
-exports.blogsRouter.get('/test', (req, res) => {
-    res.status(200).send(blogs);
-});
 // GET Returns All blogs
 exports.blogsRouter.get('/', (req, res) => {
     res.status(200).send(blogs);
@@ -49,7 +46,7 @@ exports.blogsRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, nameV
     blogs.push(newBlog);
     res.status(201).send(newBlog);
 });
-//GET
+//GET blog buy id
 exports.blogsRouter.get('/:id', (req, res) => {
     let blog = blogs.find(b => b.id == req.params.id);
     if (blog) {
@@ -81,4 +78,5 @@ exports.blogsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, nam
         res.status(200).send(blog);
         return;
     }
+    res.status(404);
 });

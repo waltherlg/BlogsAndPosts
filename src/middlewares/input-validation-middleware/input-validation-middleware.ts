@@ -5,7 +5,7 @@ import {validationResult} from "express-validator";
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const  errors = validationResult(req)
     if (!errors.isEmpty()){
-        let errorsMasseges = ({errors: errors.array().map( x => {
+        let errorsMasseges = ({errorsMessages: errors.array().map( x => {
             return x.msg
             }
             )})
