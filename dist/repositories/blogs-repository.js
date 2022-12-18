@@ -37,6 +37,7 @@ exports.blogsRepository = {
             "websiteUrl": websiteUrl
         };
         blogs.push(newBlog);
+        return newBlog;
     },
     updateBlog(id, name, description, websiteUrl) {
         let blog = blogs.find(b => b.id === id);

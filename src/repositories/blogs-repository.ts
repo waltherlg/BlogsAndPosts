@@ -45,6 +45,7 @@ export const blogsRepository = {
             "websiteUrl": websiteUrl
         }
         blogs.push(newBlog)
+        return newBlog
     },
 
     updateBlog(id: string, name: string, description: string, websiteUrl: string){
