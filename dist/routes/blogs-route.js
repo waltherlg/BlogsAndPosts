@@ -99,7 +99,7 @@ exports.blogsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, nam
     const updateBlog = blogs_repository_1.blogsRepository.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl);
     if (updateBlog) {
         const blog = blogs_repository_1.blogsRepository.getBlogByID(req.params.id);
-        return res.send(200);
+        return res.send(204);
     }
     res.status(404);
 });

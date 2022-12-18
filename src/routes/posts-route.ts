@@ -7,10 +7,10 @@ import {postsRepository} from "../repositories/posts-repository";
 
 export const postsRouter = Router({})
 
-const titleValidation = body('title').trim().isLength({min: 1, max: 30}).withMessage({"message": "wrong title", "field": "title" })
-const shortDescriptionValidation = body('shortDescription').trim().isLength({min: 1, max: 100}).withMessage({"message": "wrong shortDescription", "field": "shortDescription" })
-const contentValidation = body('content').trim().isLength({min: 1, max: 1000}).withMessage({"message": "wrong content", "field": "content" })
-const blogIdValidation = body('blogId').trim().isLength({min: 1, max: 1000}).withMessage({"message": "wrong blogId", "field": "blogId" })
+const titleValidation = body('title').exists().trim().isLength({max: 30}).withMessage({"message": "wrong title", "field": "title" })
+const shortDescriptionValidation = body('shortDescription').exists().trim().isLength({max: 100}).withMessage({"message": "wrong shortDescription", "field": "shortDescription" })
+const contentValidation = body('content').exists().trim().isLength({max: 1000}).withMessage({"message": "wrong content", "field": "content" })
+const blogIdValidation = body('blogId').exists().trim().withMessage({"message": "wrong blogId", "field": "blogId" })
 /*
 type postType = {
     id: string,
