@@ -20,6 +20,7 @@ type blogType = {
 }
 
 let blogs: Array<blogType> = [
+    /*
     {
         "id": "firstblog",
         "name": "name1",
@@ -38,6 +39,8 @@ let blogs: Array<blogType> = [
         "description": "description3",
         "websiteUrl": "websiteUrl"
     }
+
+     */
 ]
 let userAut = false
 
