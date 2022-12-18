@@ -19,7 +19,7 @@ type postType = {
 }
 
 let posts: Array<postType> = [
-    {
+   /* {
         "id": "firspost",
         "title": "music",
         "shortDescription": "post of music",
@@ -43,7 +43,7 @@ let posts: Array<postType> = [
         "blogId": "blogId3",
         "blogName": "blogName3"
     },
-
+*/
 ]
 
 // GET Returns All posts

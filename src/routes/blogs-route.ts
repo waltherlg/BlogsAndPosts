@@ -42,7 +42,6 @@ let blogs: Array<blogType> = [
 
      */
 ]
-let userAut = false
 
 // GET Returns All blogs
 blogsRouter.get('/', (req: Request, res: Response) => {
