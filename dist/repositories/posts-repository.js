@@ -45,6 +45,7 @@ exports.postsRepository = {
             "blogName": content + " " + title
         };
         posts.push(newPost);
+        return newPost;
     },
     updatePost(id, title, shortDescription, content, blogId) {
         let post = posts.find(p => p.id === id);

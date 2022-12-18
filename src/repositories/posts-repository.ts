@@ -55,6 +55,7 @@ export const postsRepository = {
             "blogName": content + " " + title
         }
         posts.push(newPost)
+        return newPost
     },
 
     updatePost(id: string, title: string, shortDescription: string, content: string, blogId: string){
