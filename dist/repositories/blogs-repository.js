@@ -21,4 +21,42 @@ let blogs = [
         "websiteUrl": "websiteUrl"
     }
 ];
-exports.blogsRepository = {};
+exports.blogsRepository = {
+    getBlogByID(id) {
+        const blog = blogs.find(b => b.id === id);
+        return blog;
+    },
+    getAllBlogs() {
+        return blogs;
+    },
+    createBlog(name, description, websiteUrl) {
+        const newBlog = {
+            "id": (+(new Date())).toString(),
+            "name": name,
+            "description": description,
+            "websiteUrl": websiteUrl
+        };
+        blogs.push(newBlog);
+    },
+    updateBlog(id, name, description, websiteUrl) {
+        let blog = blogs.find(b => b.id === id);
+        if (blog) {
+            blog.name = name;
+            blog.description = description;
+            blog.websiteUrl = websiteUrl;
+            return true;
+        }
+        else {
+            return false;
+        }
+    },
+    deleteBlog(id) {
+        for (let i = 0; i < blogs.length; i++) {
+            if (blogs[i].id === id) {
+                blogs.splice(i, 1);
+                return true;
+            }
+        }
+        return false;
+    }
+};
