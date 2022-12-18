@@ -61,5 +61,6 @@ exports.blogsRepository = {
     },
     deleteAllBlogs() {
         blogs.splice(0);
-    }
+        return blogs;
+    },
 };

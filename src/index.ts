@@ -16,7 +16,7 @@ const port = 3000
 app.use(bodyParser.json());
 
 app.use('/testing/all-data', testingRouter)
-app.use('/videos', videosRouter)
+//app.use('/videos', videosRouter)
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
 

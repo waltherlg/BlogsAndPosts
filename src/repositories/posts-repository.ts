@@ -83,5 +83,6 @@ export const postsRepository = {
 
     deleteAllPosts() {
         posts.splice(0);
-    }
+        return posts
+    },
 }

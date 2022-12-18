@@ -110,7 +110,7 @@ videosRouter.delete('/:id', (req, res) => {
 })
 
 // DELETE delete all data
-videosRouter.delete('/testing/all-data', (req, res) => {
+    videosRouter.delete('/testing/all-data', (req, res) => {
     videos.splice(0);
     res.send(204);
 })
