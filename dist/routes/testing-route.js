@@ -10,10 +10,10 @@ exports.testingRouter.delete('/', (req, res) => {
     const isPostsDeleted = posts_repository_1.postsRepository.deleteAllPosts();
     const isBlogsDeleted = blogs_repository_1.blogsRepository.deleteAllBlogs();
     if (isPostsDeleted && isBlogsDeleted) {
-        return res.send(204);
+        return res.sendStatus(204);
     }
     else {
-        res.send(404);
+        res.sendStatus(404);
     }
 });
 exports.testingRouter.get('/', (req, res) => {

@@ -61,7 +61,7 @@ exports.postsRouter.get('/:id', (req, res) => {
         res.status(200).send(foundPost);
     }
     else {
-        res.status(404);
+        res.sendStatus(404);
     }
 });
 // POST add blogs
@@ -84,10 +84,10 @@ exports.postsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, tit
     const updatePost = posts_repository_1.postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId);
     if (updatePost) {
         // const post = blogsRepository.getBlogByID(req.params.id)
-        res.send(200);
+        res.sendStatus(200);
     }
     else {
-        res.status(404);
+        res.sendStatus(404);
     }
     // let post = posts.find(p => p.id === req.params.id);
     // if (post) {
@@ -104,10 +104,10 @@ exports.postsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, tit
 exports.postsRouter.delete('/:id', basic_auth_middleware_1.basicAuthMiddleware, (req, res) => {
     const isDeleted = posts_repository_1.postsRepository.deletePost(req.params.id);
     if (isDeleted) {
-        return res.send(204);
+        return res.sendStatus(204);
     }
     else {
-        res.send(404);
+        res.sendStatus(404);
     }
     // for (let i = 0; i < posts.length; i++){
     //     if (posts[i].id === req.params.id){
@@ -116,5 +116,5 @@ exports.postsRouter.delete('/:id', basic_auth_middleware_1.basicAuthMiddleware, 
     //         return;
     //     }
     // }
-    res.send(404);
+    //res.sendStatus(404);
 });

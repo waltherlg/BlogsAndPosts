@@ -66,7 +66,7 @@ exports.blogsRouter.get('/:id', (req, res) => {
         res.status(200).send(foundBlog);
     }
     else {
-        res.status(404);
+        res.sendStatus(404);
     }
     //    let blog = blogs.find(b => b.id == req.params.id);
     //    if (blog) {
@@ -81,10 +81,10 @@ exports.blogsRouter.get('/:id', (req, res) => {
 exports.blogsRouter.delete('/:id', basic_auth_middleware_1.basicAuthMiddleware, (req, res) => {
     const isDeleted = blogs_repository_1.blogsRepository.deleteBlog(req.params.id);
     if (isDeleted) {
-        res.send(204);
+        res.sendStatus(204);
     }
     else {
-        res.send(404);
+        res.sendStatus(404);
     }
     // for (let i = 0; i < blogs.length; i++){
     //     if (blogs[i].id === req.params.id){
@@ -99,10 +99,10 @@ exports.blogsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, nam
     const updateBlog = blogs_repository_1.blogsRepository.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl);
     if (updateBlog) {
         const blog = blogs_repository_1.blogsRepository.getBlogByID(req.params.id);
-        res.send(204);
+        res.sendStatus(204);
     }
     else {
-        res.send(404);
+        res.sendStatus(404);
     }
 });
 // let blog = blogs.find(b => b.id === req.params.id);

@@ -46,8 +46,8 @@ const websiteUrlValidation = body('websiteUrl').exists().trim().isLength({max: 1
 
 // GET Returns All blogs
 blogsRouter.get('/', (req: Request, res: Response) => {
-    const allblogs = blogsRepository.getAllBlogs()
-    res.status(200).send(allblogs);
+    const allBlogs = blogsRepository.getAllBlogs()
+    res.status(200).send(allBlogs);
     //res.status(200).send(blogs);
 })
 
@@ -79,7 +79,7 @@ blogsRouter.get('/:id', (req: Request, res: Response) => {
         res.status(200).send(foundBlog)
     }
     else {
-        res.status(404)
+        res.sendStatus(404)
     }
 
 //    let blog = blogs.find(b => b.id == req.params.id);
@@ -98,10 +98,10 @@ blogsRouter.delete('/:id',
     (req, res) => {
     const isDeleted = blogsRepository.deleteBlog(req.params.id)
         if(isDeleted){
-            res.send(204)
+            res.sendStatus(204)
         }
         else {
-            res.send(404);
+            res.sendStatus(404);
         }
 
     // for (let i = 0; i < blogs.length; i++){
@@ -125,10 +125,10 @@ blogsRouter.put('/:id',
     const updateBlog = blogsRepository.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl)
         if (updateBlog){
             const blog = blogsRepository.getBlogByID(req.params.id)
-            res.send(204)
+            res.sendStatus(204)
         }
         else {
-            res.send(404)
+            res.sendStatus(404)
         }
 
 

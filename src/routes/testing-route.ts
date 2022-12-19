@@ -16,10 +16,10 @@ testingRouter.delete('/',
     const isPostsDeleted = postsRepository.deleteAllPosts();
     const isBlogsDeleted = blogsRepository.deleteAllBlogs();
     if (isPostsDeleted && isBlogsDeleted){
-        return res.send(204)
+        return res.sendStatus(204)
     }
     else {
-        res.send(404);
+        res.sendStatus(404);
     }
 
 

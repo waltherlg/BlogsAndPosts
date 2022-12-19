@@ -63,7 +63,7 @@ postsRouter.get('/:id', (req, res) => {
         res.status(200).send(foundPost)
     }
     else {
-        res.status(404)
+        res.sendStatus(404)
     }
 })
 
@@ -102,10 +102,10 @@ postsRouter.put('/:id',
         const updatePost = postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
         if (updatePost){
             // const post = blogsRepository.getBlogByID(req.params.id)
-            res.send(200)
+            res.sendStatus(200)
         }
         else {
-            res.status(404)
+            res.sendStatus(404)
         }
 
 
@@ -127,10 +127,10 @@ postsRouter.delete('/:id',
     (req: Request, res: Response) => {
         const isDeleted = postsRepository.deletePost(req.params.id)
         if(isDeleted){
-            return res.send(204)
+            return res.sendStatus(204)
         }
         else {
-            res.send(404);
+            res.sendStatus(404);
         }
 
         // for (let i = 0; i < posts.length; i++){
@@ -140,6 +140,6 @@ postsRouter.delete('/:id',
         //         return;
         //     }
         // }
-        res.send(404);
+        //res.sendStatus(404);
     })
 
