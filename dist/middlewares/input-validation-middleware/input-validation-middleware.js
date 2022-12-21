@@ -4,6 +4,7 @@ exports.inputValidationMiddleware = exports.nameValidation = void 0;
 const express_validator_1 = require("express-validator");
 exports.nameValidation = (0, express_validator_1.body)('name')
     .exists().bail().withMessage({ "message": "name not exist", "field": "name" })
+    .notEmpty().withMessage({ "message": "name is empty", "field": "name" }).bail()
     .trim().bail().withMessage({ "message": "name is not string", "field": "name" })
     .isLength({ max: 15 }).bail().withMessage({ "message": "wrong length name", "field": "name" });
 const inputValidationMiddleware = (req, res, next) => {
