@@ -8,11 +8,8 @@ import {blogsRepository} from "../repositories/blogs-repository";
 
 export const blogsRouter = Router({})
 
+import {nameValidation} from "../middlewares/input-validation-middleware/input-validation-middleware";
 
-const nameValidation = body('name')
-    .exists().bail().withMessage({"message": "name not exist", "field": "name" })
-    .trim().bail().withMessage({"message": "name is not string", "field": "name" })
-    .isLength({max: 15}).bail().withMessage({"message": "wrong length name", "field": "name" })
 
 const descriptionValidation = body('description')
     .exists().bail().withMessage({"message": "description not exist", "field": "description" })

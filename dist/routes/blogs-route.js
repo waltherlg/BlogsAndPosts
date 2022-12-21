@@ -8,10 +8,7 @@ const input_validation_middleware_1 = require("../middlewares/input-validation-m
 const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
 const blogs_repository_1 = require("../repositories/blogs-repository");
 exports.blogsRouter = (0, express_1.Router)({});
-const nameValidation = (0, express_validator_1.body)('name')
-    .exists().bail().withMessage({ "message": "name not exist", "field": "name" })
-    .trim().bail().withMessage({ "message": "name is not string", "field": "name" })
-    .isLength({ max: 15 }).bail().withMessage({ "message": "wrong length name", "field": "name" });
+const input_validation_middleware_2 = require("../middlewares/input-validation-middleware/input-validation-middleware");
 const descriptionValidation = (0, express_validator_1.body)('description')
     .exists().bail().withMessage({ "message": "description not exist", "field": "description" })
     .trim().bail().withMessage({ "message": "description is not string", "field": "description" })
@@ -58,7 +55,7 @@ exports.blogsRouter.get('/', (req, res) => {
     //res.status(200).send(blogs);
 });
 // POST add blogs
-exports.blogsRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, nameValidation, descriptionValidation, websiteUrlValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
+exports.blogsRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, input_validation_middleware_2.nameValidation, descriptionValidation, websiteUrlValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
     const newBlog = blogs_repository_1.blogsRepository.createBlog(req.body.name, req.body.description, req.body.websiteUrl);
     // const newBlog: any = {
     //     "id": (+(new Date())).toString(),
@@ -105,7 +102,7 @@ exports.blogsRouter.delete('/:id', basic_auth_middleware_1.basicAuthMiddleware, 
     // }
 });
 // PUT update blogs by id
-exports.blogsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, nameValidation, descriptionValidation, websiteUrlValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
+exports.blogsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, input_validation_middleware_2.nameValidation, descriptionValidation, websiteUrlValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
     const updateBlog = blogs_repository_1.blogsRepository.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl);
     if (updateBlog) {
         const blog = blogs_repository_1.blogsRepository.getBlogByID(req.params.id);
