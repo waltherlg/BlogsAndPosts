@@ -5,10 +5,10 @@ const express_validator_1 = require("express-validator");
 const inputValidationMiddleware = (req, res, next) => {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
-        let errorsMasseges = ({ errorsMessages: errors.array().map(x => {
-                return x.msg;
-            }) });
-        return res.status(400).send(errorsMasseges);
+        let errorsMasseges = (errors.array().map(x => {
+            return x.msg;
+        }));
+        return res.status(400).send({ errorsMasseges });
         // const  errors = validationResult(req).array({onlyFirstError: true}).map((item) => {
         //     return{massage:"incorrect input",field:item.param}
         // })
