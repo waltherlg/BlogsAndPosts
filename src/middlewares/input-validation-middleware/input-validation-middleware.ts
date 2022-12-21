@@ -3,10 +3,10 @@ import {NextFunction, Request, Response} from "express";
 import {body, validationResult} from "express-validator";
 
 export const nameValidation = body('name')
-    .exists().bail().withMessage({"message": "name not exist", "field": "name" })
-    .notEmpty().withMessage({"message": "name is empty", "field": "name"}).bail()
+    .exists({checkFalsy: true, checkNull: true}).bail().withMessage({"message": "name not exist", "field": "name" })
+    .notEmpty().bail().withMessage({"message": "name is empty", "field": "name"})
     .trim().bail().withMessage({"message": "name is not string", "field": "name" })
-    .isLength({max: 15}).bail().withMessage({"message": "wrong length name", "field": "name" })
+    .isLength({min: 1, max: 15}).bail().withMessage({"message": "wrong length name", "field": "name" })
 
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
