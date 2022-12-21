@@ -8,7 +8,7 @@ export const inputValidationMiddleware = (req: Request, res: Response, next: Nex
     })
     if (errors.length){
             let errorsMasseges = ({errorsMasseges: errors})
-            return res.status(400).send(errorsMasseges)
+            return res.status(400).json(errorsMasseges)
         // let errorsMasseges = ({errorsMessages: errors.array().map( x => {
         //     return x.msg
         //     }

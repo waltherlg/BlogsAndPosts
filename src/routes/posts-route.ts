@@ -7,10 +7,10 @@ import {postsRepository} from "../repositories/posts-repository";
 
 export const postsRouter = Router({})
 
-const titleValidation = body('title').exists().trim().isLength({max: 30}).withMessage({"message": "wrong title", "field": "title" })
-const shortDescriptionValidation = body('shortDescription').exists().trim().isLength({max: 100}).withMessage({"message": "wrong shortDescription", "field": "shortDescription" })
-const contentValidation = body('content').exists().trim().isLength({max: 1000}).withMessage({"message": "wrong content", "field": "content" })
-const blogIdValidation = body('blogId').exists().trim().withMessage({"message": "wrong blogId", "field": "blogId" })
+const titleValidation = body('title').exists().trim().isLength({max: 30}).withMessage({message: "wrong title", field: "title" })
+const shortDescriptionValidation = body('shortDescription').exists().trim().isLength({max: 100}).withMessage({message: "wrong shortDescription", field: "shortDescription" })
+const contentValidation = body('content').exists().trim().isLength({max: 1000}).withMessage({message: "wrong content", field: "content" })
+const blogIdValidation = body('blogId').exists().trim().withMessage({message: "wrong blogId", field: "blogId" })
 /*
 type postType = {
     id: string,
@@ -102,7 +102,7 @@ postsRouter.put('/:id',
         const updatePost = postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
         if (updatePost){
             // const post = blogsRepository.getBlogByID(req.params.id)
-            res.sendStatus(200)
+            res.sendStatus(204)
         }
         else {
             res.sendStatus(404)
