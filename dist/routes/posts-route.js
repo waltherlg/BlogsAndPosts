@@ -7,10 +7,21 @@ const input_validation_middleware_1 = require("../middlewares/input-validation-m
 const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
 const posts_repository_1 = require("../repositories/posts-repository");
 exports.postsRouter = (0, express_1.Router)({});
-const titleValidation = (0, express_validator_1.body)('title').exists().trim().isLength({ max: 30 }).withMessage({ message: "wrong title", field: "title" });
-const shortDescriptionValidation = (0, express_validator_1.body)('shortDescription').exists().trim().isLength({ max: 100 }).withMessage({ message: "wrong shortDescription", field: "shortDescription" });
-const contentValidation = (0, express_validator_1.body)('content').exists().trim().isLength({ max: 1000 }).withMessage({ message: "wrong content", field: "content" });
-const blogIdValidation = (0, express_validator_1.body)('blogId').exists().trim().withMessage({ message: "wrong blogId", field: "blogId" });
+const titleValidation = (0, express_validator_1.body)('title')
+    .exists().bail().withMessage({ message: "title not exist", field: "title" })
+    .trim().bail().withMessage({ message: "title is not string", field: "title" })
+    .isLength({ max: 30 }).bail().withMessage({ message: "title wrong length", field: "title" });
+const shortDescriptionValidation = (0, express_validator_1.body)('shortDescription')
+    .exists().bail().withMessage({ message: "shortDescription not exist", field: "shortDescription" })
+    .trim().bail().withMessage({ message: "shortDescription is not string", field: "shortDescription" })
+    .isLength({ max: 100 }).bail().withMessage({ message: "shortDescription wrong length", field: "shortDescription" });
+const contentValidation = (0, express_validator_1.body)('content')
+    .exists().bail().withMessage({ message: "content not exist", field: "content" })
+    .trim().bail().withMessage({ message: "content is not string", field: "content" })
+    .isLength({ max: 1000 }).bail().withMessage({ message: "wrong content", field: "content" });
+const blogIdValidation = (0, express_validator_1.body)('blogId')
+    .exists().bail().withMessage({ message: "is not a string", field: "blogId" })
+    .trim().bail().withMessage({ message: "wrong blogId", field: "blogId" });
 /*
 type postType = {
     id: string,
