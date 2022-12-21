@@ -7,7 +7,7 @@ const inputValidationMiddleware = (req, res, next) => {
         return { massage: "incorrect input", field: item.param };
     });
     if (errors.length) {
-        return res.status(400).json({ "errorsMasseges": errors });
+        return res.status(400).json({ errorsMasseges: errors });
         // let errorsMasseges = ({errorsMessages: errors.array().map( x => {
         //     return x.msg
         //     }
