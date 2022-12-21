@@ -125,7 +125,7 @@ blogsRouter.put('/:id',
     const updateBlog = blogsRepository.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl)
         if (updateBlog){
             const blog = blogsRepository.getBlogByID(req.params.id)
-            res.sendStatus(204)
+            res.sendStatus(200)
         }
         else {
             res.sendStatus(404)
