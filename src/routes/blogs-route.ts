@@ -9,9 +9,21 @@ import {blogsRepository} from "../repositories/blogs-repository";
 export const blogsRouter = Router({})
 
 
-const nameValidation = body('name').exists().trim().isLength({max: 15}).withMessage({"message": "wrong name", "field": "name" })
-const descriptionValidation = body('description').exists().trim().isLength({max: 500}).withMessage({"message": "wrong description", "field": "description" })
-const websiteUrlValidation = body('websiteUrl').exists().trim().isLength({max: 100}).isURL().withMessage({"message": "wrong websiteUrl", "field": "websiteUrl" })
+const nameValidation = body('name')
+    .exists().bail().withMessage({"message": "name not exist", "field": "name" })
+    .trim().bail().withMessage({"message": "name is not string", "field": "name" })
+    .isLength({max: 15}).bail().withMessage({"message": "wrong length name", "field": "name" })
+
+const descriptionValidation = body('description')
+    .exists().bail().withMessage({"message": "description not exist", "field": "description" })
+    .trim().bail().withMessage({"message": "description is not string", "field": "description" })
+    .isLength({max: 500}).withMessage({"message": "wrong length description", "field": "description" })
+
+const websiteUrlValidation = body('websiteUrl')
+    .exists().bail().withMessage({"message": "websiteUrl not exist", "field": "websiteUrl" })
+    .trim().bail().withMessage({"message": "websiteUrl is not string", "field": "websiteUrl" })
+    .isLength({max: 100}).bail().withMessage({"message": "wrong length websiteUrl", "field": "websiteUrl" })
+    .isURL().bail().withMessage({"message": "wrong websiteUrl", "field": "websiteUrl" })
 
 // type blogType = {
 //     id: string,

@@ -8,9 +8,19 @@ const input_validation_middleware_1 = require("../middlewares/input-validation-m
 const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
 const blogs_repository_1 = require("../repositories/blogs-repository");
 exports.blogsRouter = (0, express_1.Router)({});
-const nameValidation = (0, express_validator_1.body)('name').exists().trim().isLength({ max: 15 }).withMessage({ "message": "wrong name", "field": "name" });
-const descriptionValidation = (0, express_validator_1.body)('description').exists().trim().isLength({ max: 500 }).withMessage({ "message": "wrong description", "field": "description" });
-const websiteUrlValidation = (0, express_validator_1.body)('websiteUrl').exists().trim().isLength({ max: 100 }).isURL().withMessage({ "message": "wrong websiteUrl", "field": "websiteUrl" });
+const nameValidation = (0, express_validator_1.body)('name')
+    .exists().bail().withMessage({ "message": "name not exist", "field": "name" })
+    .trim().bail().withMessage({ "message": "name is not string", "field": "name" })
+    .isLength({ max: 15 }).bail().withMessage({ "message": "wrong length name", "field": "name" });
+const descriptionValidation = (0, express_validator_1.body)('description')
+    .exists().bail().withMessage({ "message": "description not exist", "field": "description" })
+    .trim().bail().withMessage({ "message": "description is not string", "field": "description" })
+    .isLength({ max: 500 }).withMessage({ "message": "wrong length description", "field": "description" });
+const websiteUrlValidation = (0, express_validator_1.body)('websiteUrl')
+    .exists().bail().withMessage({ "message": "websiteUrl not exist", "field": "websiteUrl" })
+    .trim().bail().withMessage({ "message": "websiteUrl is not string", "field": "websiteUrl" })
+    .isLength({ max: 100 }).bail().withMessage({ "message": "wrong length websiteUrl", "field": "websiteUrl" })
+    .isURL().bail().withMessage({ "message": "wrong websiteUrl", "field": "websiteUrl" });
 // type blogType = {
 //     id: string,
 //     name: string,
