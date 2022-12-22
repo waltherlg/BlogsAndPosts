@@ -7,7 +7,7 @@ let posts = [
         "title": "music",
         "shortDescription": "post of music",
         "content": "content1",
-        "blogId": "blogId2",
+        "blogId": "blogId1",
         "blogName": "Bob's trambon"
     },
     {
@@ -29,7 +29,11 @@ let posts = [
 ];
 exports.postsRepository = {
     getPostByID(id) {
-        const post = posts.find(b => b.id === id);
+        const post = posts.find(p => p.id === id);
+        return post;
+    },
+    getPostByBlogsID(blogId) {
+        const post = posts.find(p => p.blogId === blogId);
         return post;
     },
     getAllPosts() {

@@ -6,6 +6,7 @@ const express_validator_1 = require("express-validator");
 const input_validation_middleware_1 = require("../middlewares/input-validation-middleware/input-validation-middleware");
 const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
 const posts_repository_1 = require("../repositories/posts-repository");
+const input_validation_middleware_2 = require("../middlewares/input-validation-middleware/input-validation-middleware");
 exports.postsRouter = (0, express_1.Router)({});
 const titleValidation = (0, express_validator_1.body)('title')
     .exists().bail().withMessage({ message: "title not exist", field: "title" })
@@ -21,7 +22,8 @@ const contentValidation = (0, express_validator_1.body)('content')
     .isLength({ max: 1000 }).bail().withMessage({ message: "wrong content", field: "content" });
 const blogIdValidation = (0, express_validator_1.body)('blogId')
     .exists().bail().withMessage({ message: "is not a string", field: "blogId" })
-    .trim().bail().withMessage({ message: "wrong blogId", field: "blogId" });
+    .trim().bail().withMessage({ message: "wrong blogId", field: "blogId" })
+    .custom(input_validation_middleware_2.isBlogIdExist).withMessage({ message: "this blog id is already exist", field: "blogId" });
 /*
 type postType = {
     id: string,
@@ -68,6 +70,16 @@ exports.postsRouter.get('/', (req, res) => {
 //GET return post bi id
 exports.postsRouter.get('/:id', (req, res) => {
     let foundPost = posts_repository_1.postsRepository.getPostByID(req.params.id.toString());
+    if (foundPost) {
+        res.status(200).send(foundPost);
+    }
+    else {
+        res.sendStatus(404);
+    }
+});
+//GET return post bi id
+exports.postsRouter.get('/blogid/:id', (req, res) => {
+    let foundPost = posts_repository_1.postsRepository.getPostByBlogsID(req.params.id.toString());
     if (foundPost) {
         res.status(200).send(foundPost);
     }

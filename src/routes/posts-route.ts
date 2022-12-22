@@ -1,9 +1,11 @@
 import {Request, Response, Router} from "express";
 import {body, validationResult} from "express-validator";
-import {inputValidationMiddleware} from "../middlewares/input-validation-middleware/input-validation-middleware";
+import { inputValidationMiddleware} from "../middlewares/input-validation-middleware/input-validation-middleware";
 import {basicAuthMiddleware} from "../middlewares/basic-auth.middleware";
 
 import {postsRepository} from "../repositories/posts-repository";
+
+import {isBlogIdExist} from "../middlewares/input-validation-middleware/input-validation-middleware";
 
 export const postsRouter = Router({})
 
@@ -25,6 +27,8 @@ const contentValidation = body('content')
 const blogIdValidation = body('blogId')
     .exists().bail().withMessage({message: "is not a string", field: "blogId" })
     .trim().bail().withMessage({message: "wrong blogId", field: "blogId" })
+    .custom(isBlogIdExist).withMessage({message: "this blog id is already exist", field: "blogId" })
+
 
 /*
 type postType = {
@@ -74,6 +78,17 @@ postsRouter.get('/', (req: Request, res: Response) => {
 //GET return post bi id
 postsRouter.get('/:id', (req, res) => {
     let foundPost = postsRepository.getPostByID(req.params.id.toString())
+    if(foundPost){
+        res.status(200).send(foundPost)
+    }
+    else {
+        res.sendStatus(404)
+    }
+})
+
+//GET return post bi id
+postsRouter.get('/blogid/:id', (req, res) => {
+    let foundPost = postsRepository.getPostByBlogsID(req.params.id.toString())
     if(foundPost){
         res.status(200).send(foundPost)
     }

@@ -1,4 +1,5 @@
 
+
 type postType = {
     id: string,
     title: string,
@@ -13,7 +14,7 @@ let posts: Array<postType> = [
         "title": "music",
         "shortDescription": "post of music",
         "content": "content1",
-        "blogId": "blogId2",
+        "blogId": "blogId1",
         "blogName": "Bob's trambon"
     },
     {
@@ -36,8 +37,14 @@ let posts: Array<postType> = [
 ]
 
 export const postsRepository = {
+
     getPostByID(id: string | undefined) {
-        const post = posts.find(b => b.id === id);
+        const post = posts.find(p => p.id === id);
+        return post
+    },
+
+    getPostByBlogsID(blogId: string | undefined) {
+        const post = posts.find(p => p.blogId === blogId);
         return post
     },
 
