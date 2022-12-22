@@ -52,7 +52,7 @@ const createBlogIdValidation = (0, express_validator_1.body)('blogId')
     // }).withMessage({"message": "blogId already exist", "field": "blogId" })
     .custom((value) => __awaiter(void 0, void 0, void 0, function* () {
     const isBlogIdExist = yield posts_repository_1.postsRepository.getPostByBlogsID(value);
-    if (!isBlogIdExist)
+    if (isBlogIdExist)
         throw new Error;
     return true;
 })).withMessage({ "message": "blogId not exist", "field": "blogId" });

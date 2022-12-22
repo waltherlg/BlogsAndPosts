@@ -54,7 +54,7 @@ const createBlogIdValidation = body('blogId')
 
     .custom(async value => {
         const isBlogIdExist = await postsRepository.getPostByBlogsID(value)
-        if (!isBlogIdExist) throw new Error
+        if (isBlogIdExist) throw new Error
         return true
     }).withMessage({"message": "blogId not exist", "field": "blogId" })
 
