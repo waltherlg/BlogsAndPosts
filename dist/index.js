@@ -14,7 +14,6 @@ const app = (0, express_1.default)();
 const port = 3000;
 app.use(bodyParser.json());
 app.use('/testing/all-data', testing_route_1.testingRouter);
-//app.use('/videos', videosRouter)
 app.use('/blogs', blogs_route_1.blogsRouter);
 app.use('/posts', posts_route_1.postsRouter);
 app.listen(port, () => {

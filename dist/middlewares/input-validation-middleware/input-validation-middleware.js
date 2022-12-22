@@ -14,17 +14,6 @@ const inputValidationMiddleware = (req, res, next) => {
                 return x.msg;
             }) };
         return res.status(400).send(errorsMessages);
-        // const  errors = validationResult(req).array({onlyFirstError: true}).map((item) => {
-        //     return{massage:"incorrect input",field:item.param}
-        // })
-        // if (errors.length){
-        //         let errorsMessages = ({errorsMessages: errors})
-        //         return res.status(400).send(errorsMessages)
-        // let errorsMessages = ({errorsMessages: errors.array().map( x => {
-        //     return x.msg
-        //     }
-        //     )})
-        //return res.status(400).send(errorsMessages)
     }
     else {
         next();

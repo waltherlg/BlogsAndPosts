@@ -1,26 +1,13 @@
 import {Request, Response, Router} from "express";
-import {body, CustomValidator, validationResult} from "express-validator";
+import {body, validationResult} from "express-validator";
 import { inputValidationMiddleware} from "../middlewares/input-validation-middleware/input-validation-middleware";
 import {basicAuthMiddleware} from "../middlewares/basic-auth.middleware";
 
 import {postsRepository} from "../repositories/posts-repository";
 import {blogsRepository} from "../repositories/blogs-repository";
 
-//import {isBlogIdExist} from "../middlewares/input-validation-middleware/input-validation-middleware";
 
 export const postsRouter = Router({})
-
-// const isBlogIdExist: CustomValidator = value => {
-//     // @ts-ignore
-//     postsRepository.getPostByBlogsID(value).then(post => {
-//         if (post) {
-//             return Promise.reject('E-mail already in use');
-//         }
-//         else {
-//         }
-//     });
-// };
-
 
 
 const titleValidation = body('title')
@@ -52,51 +39,6 @@ const createBlogIdValidation = body('blogId')
         return true
     }).withMessage({"message": "blogId not exist", "field": "blogId" })
 
-    // .custom(async value => {
-    //     const isBlogIdExist = await postsRepository.getPostByBlogsID(value)
-    //     if (isBlogIdExist) throw new Error
-    //     return true
-    // }).withMessage({"message": "blogId exist", "field": "blogId" })
-
-
-/*
-type postType = {
-    id: string,
-    title: string,
-    shortDescription: string,
-    content: string,
-    blogId: string,
-    blogName: string
-}
-
-let posts: Array<postType> = [
-    {
-        "id": "firspost",
-        "title": "music",
-        "shortDescription": "post of music",
-        "content": "content1",
-        "blogId": "blogId2",
-        "blogName": "Bob's trambon"
-    },
-    {
-        "id": "2",
-        "title": "title2",
-        "shortDescription": "shortDescription2",
-        "content": "content2",
-        "blogId": "blogId2",
-        "blogName": "blogName2"
-    },
-    {
-        "id": "3",
-        "title": "title3",
-        "shortDescription": "shortDescription2",
-        "content": "content3",
-        "blogId": "blogId3",
-        "blogName": "blogName3"
-    },
-
-]
-*/
 
 // GET Returns All posts
 postsRouter.get('/', (req: Request, res: Response) => {
@@ -137,16 +79,6 @@ postsRouter.post('/',
     (req: Request, res: Response) => {
         const newPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
         res.status(201).send(newPost)
-        // const newPost: any = {
-        //     "id": (+(new Date())).toString(),
-        //     "title": req.body.title,
-        //     "shortDescription": req.body.shortDescription,
-        //     "content": req.body.content,
-        //     "blogId": req.body.blogId,
-        //     "blogName": req.body.content + " " + req.body.title
-        // }
-        // posts.push(newPost)
-        // res.status(201).send(newPost)
     })
 
 // PUT update post
@@ -160,24 +92,11 @@ postsRouter.put('/:id',
     (req: Request, res: Response) => {
         const updatePost = postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
         if (updatePost){
-            // const post = blogsRepository.getBlogByID(req.params.id)
             res.sendStatus(204)
         }
         else {
             res.sendStatus(404)
         }
-
-
-        // let post = posts.find(p => p.id === req.params.id);
-        // if (post) {
-        //     post.title = req.body.title,
-        //     post.shortDescription = req.body.shortDescription,
-        //     post.content = req.body.content,
-        //     post.blogId = req.body.blogId
-        //     res.status(201).send(post)
-        //     return
-        // }
-        // res.status(404)
     })
 
 // DELETE post
@@ -191,14 +110,5 @@ postsRouter.delete('/:id',
         else {
             res.sendStatus(404);
         }
-
-        // for (let i = 0; i < posts.length; i++){
-        //     if (posts[i].id === req.params.id){
-        //         posts.splice(i, 1);
-        //         res.send(204);
-        //         return;
-        //     }
-        // }
-        //res.sendStatus(404);
     })
 

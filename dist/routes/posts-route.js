@@ -16,18 +16,7 @@ const input_validation_middleware_1 = require("../middlewares/input-validation-m
 const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
 const posts_repository_1 = require("../repositories/posts-repository");
 const blogs_repository_1 = require("../repositories/blogs-repository");
-//import {isBlogIdExist} from "../middlewares/input-validation-middleware/input-validation-middleware";
 exports.postsRouter = (0, express_1.Router)({});
-// const isBlogIdExist: CustomValidator = value => {
-//     // @ts-ignore
-//     postsRepository.getPostByBlogsID(value).then(post => {
-//         if (post) {
-//             return Promise.reject('E-mail already in use');
-//         }
-//         else {
-//         }
-//     });
-// };
 const titleValidation = (0, express_validator_1.body)('title')
     .exists().bail().withMessage({ message: "title not exist", field: "title" })
     .trim().bail().withMessage({ message: "title is not string", field: "title" })
@@ -52,49 +41,6 @@ const createBlogIdValidation = (0, express_validator_1.body)('blogId')
         throw new Error;
     return true;
 })).withMessage({ "message": "blogId not exist", "field": "blogId" });
-// .custom(async value => {
-//     const isBlogIdExist = await postsRepository.getPostByBlogsID(value)
-//     if (isBlogIdExist) throw new Error
-//     return true
-// }).withMessage({"message": "blogId exist", "field": "blogId" })
-/*
-type postType = {
-    id: string,
-    title: string,
-    shortDescription: string,
-    content: string,
-    blogId: string,
-    blogName: string
-}
-
-let posts: Array<postType> = [
-    {
-        "id": "firspost",
-        "title": "music",
-        "shortDescription": "post of music",
-        "content": "content1",
-        "blogId": "blogId2",
-        "blogName": "Bob's trambon"
-    },
-    {
-        "id": "2",
-        "title": "title2",
-        "shortDescription": "shortDescription2",
-        "content": "content2",
-        "blogId": "blogId2",
-        "blogName": "blogName2"
-    },
-    {
-        "id": "3",
-        "title": "title3",
-        "shortDescription": "shortDescription2",
-        "content": "content3",
-        "blogId": "blogId3",
-        "blogName": "blogName3"
-    },
-
-]
-*/
 // GET Returns All posts
 exports.postsRouter.get('/', (req, res) => {
     const allPosts = posts_repository_1.postsRepository.getAllPosts();
@@ -124,37 +70,16 @@ exports.postsRouter.get('/blogid/:id', (req, res) => {
 exports.postsRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, titleValidation, shortDescriptionValidation, contentValidation, createBlogIdValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
     const newPost = posts_repository_1.postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId);
     res.status(201).send(newPost);
-    // const newPost: any = {
-    //     "id": (+(new Date())).toString(),
-    //     "title": req.body.title,
-    //     "shortDescription": req.body.shortDescription,
-    //     "content": req.body.content,
-    //     "blogId": req.body.blogId,
-    //     "blogName": req.body.content + " " + req.body.title
-    // }
-    // posts.push(newPost)
-    // res.status(201).send(newPost)
 });
 // PUT update post
 exports.postsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, shortDescriptionValidation, titleValidation, contentValidation, createBlogIdValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
     const updatePost = posts_repository_1.postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId);
     if (updatePost) {
-        // const post = blogsRepository.getBlogByID(req.params.id)
         res.sendStatus(204);
     }
     else {
         res.sendStatus(404);
     }
-    // let post = posts.find(p => p.id === req.params.id);
-    // if (post) {
-    //     post.title = req.body.title,
-    //     post.shortDescription = req.body.shortDescription,
-    //     post.content = req.body.content,
-    //     post.blogId = req.body.blogId
-    //     res.status(201).send(post)
-    //     return
-    // }
-    // res.status(404)
 });
 // DELETE post
 exports.postsRouter.delete('/:id', basic_auth_middleware_1.basicAuthMiddleware, (req, res) => {
@@ -165,12 +90,4 @@ exports.postsRouter.delete('/:id', basic_auth_middleware_1.basicAuthMiddleware, 
     else {
         res.sendStatus(404);
     }
-    // for (let i = 0; i < posts.length; i++){
-    //     if (posts[i].id === req.params.id){
-    //         posts.splice(i, 1);
-    //         res.send(204);
-    //         return;
-    //     }
-    // }
-    //res.sendStatus(404);
 });

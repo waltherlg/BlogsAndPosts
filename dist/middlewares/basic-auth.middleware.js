@@ -2,14 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.basicAuthMiddleware = void 0;
 const basicAuthMiddleware = (req, res, next) => {
-    // let authHeader = req.headers.authorization;
-    // if (!authHeader) {
-    //     return res.sendStatus(401)
-    // }
-    // const authType = authHeader.split(' ')[0]
-    // const authData = authHeader.split(' ')[1]
-    // if (authType !== 'Basic') return res.sendStatus(401)
-    // if (authData !== 'YWRtaW46cXdlcnR5') return res.sendStatus(401)
     const authHeader = req.headers.authorization;
     if (!authHeader) {
         return res.status(401).send("Unauthorized");
