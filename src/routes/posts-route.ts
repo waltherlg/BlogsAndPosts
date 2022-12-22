@@ -4,6 +4,7 @@ import { inputValidationMiddleware} from "../middlewares/input-validation-middle
 import {basicAuthMiddleware} from "../middlewares/basic-auth.middleware";
 
 import {postsRepository} from "../repositories/posts-repository";
+import {blogsRepository} from "../repositories/blogs-repository";
 
 //import {isBlogIdExist} from "../middlewares/input-validation-middleware/input-validation-middleware";
 
@@ -42,7 +43,7 @@ const blogIdValidation = body('blogId')
     .trim().bail().withMessage({message: "wrong blogId", field: "blogId" })
    // .custom(isBlogIdExist).withMessage({message: "this blog id is already exist", field: "blogId" })
     .custom(async value => {
-        const isBlogIdExist = await postsRepository.getPostByBlogsID(value)
+        const isBlogIdExist = await blogsRepository.getBlogByID(value)
         if (isBlogIdExist) throw new Error
         return true
     }).withMessage({"message": "blogId already exist", "field": "blogId" })
