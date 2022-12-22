@@ -46,17 +46,17 @@ const createBlogIdValidation = body('blogId')
     .exists().bail().withMessage({message: "is not a string", field: "blogId" })
     .trim().bail().withMessage({message: "wrong blogId", field: "blogId" })
 
-    // .custom(async value => {
-    //     const isBlogIdExist = await blogsRepository.getBlogByID(value)
-    //     if (isBlogIdExist) throw new Error
-    //     return true
-    // }).withMessage({"message": "blogId already exist", "field": "blogId" })
+    .custom(async value => {
+        const isBlogIdExist = await blogsRepository.getBlogByID(value)
+        if (isBlogIdExist) throw new Error
+        return true
+    }).withMessage({"message": "blogId already exist", "field": "blogId" })
 
     .custom(async value => {
         const isBlogIdExist = await postsRepository.getPostByBlogsID(value)
         if (isBlogIdExist) throw new Error
         return true
-    }).withMessage({"message": "blogId not exist", "field": "blogId" })
+    }).withMessage({"message": "blogId exist", "field": "blogId" })
 
 
 /*
