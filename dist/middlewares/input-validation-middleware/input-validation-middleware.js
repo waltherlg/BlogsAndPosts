@@ -1,22 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.inputValidationMiddleware = exports.isBlogIdExist = exports.nameValidation = void 0;
+exports.inputValidationMiddleware = exports.nameValidation = void 0;
 const express_validator_1 = require("express-validator");
-const posts_repository_1 = require("../../repositories/posts-repository");
 exports.nameValidation = (0, express_validator_1.body)('name')
     .exists({ checkFalsy: true, checkNull: true }).bail().withMessage({ "message": "name not exist", "field": "name" })
     .notEmpty().bail().withMessage({ "message": "name is empty", "field": "name" })
     .trim().bail().withMessage({ "message": "name is not string", "field": "name" })
     .isLength({ min: 1, max: 15 }).bail().withMessage({ "message": "wrong length name", "field": "name" });
-let isBlogIdExist = value => {
-    // @ts-ignore
-    return posts_repository_1.postsRepository.getPostByBlogsID(value).then(post => {
-        if (post) {
-            return Promise.reject("BlogId is already exist");
-        }
-    });
-};
-exports.isBlogIdExist = isBlogIdExist;
 const inputValidationMiddleware = (req, res, next) => {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {

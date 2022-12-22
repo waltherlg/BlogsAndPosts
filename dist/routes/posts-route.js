@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.postsRouter = void 0;
 const express_1 = require("express");
@@ -6,8 +15,18 @@ const express_validator_1 = require("express-validator");
 const input_validation_middleware_1 = require("../middlewares/input-validation-middleware/input-validation-middleware");
 const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
 const posts_repository_1 = require("../repositories/posts-repository");
-const input_validation_middleware_2 = require("../middlewares/input-validation-middleware/input-validation-middleware");
+//import {isBlogIdExist} from "../middlewares/input-validation-middleware/input-validation-middleware";
 exports.postsRouter = (0, express_1.Router)({});
+// const isBlogIdExist: CustomValidator = value => {
+//     // @ts-ignore
+//     postsRepository.getPostByBlogsID(value).then(post => {
+//         if (post) {
+//             return Promise.reject('E-mail already in use');
+//         }
+//         else {
+//         }
+//     });
+// };
 const titleValidation = (0, express_validator_1.body)('title')
     .exists().bail().withMessage({ message: "title not exist", field: "title" })
     .trim().bail().withMessage({ message: "title is not string", field: "title" })
@@ -23,7 +42,13 @@ const contentValidation = (0, express_validator_1.body)('content')
 const blogIdValidation = (0, express_validator_1.body)('blogId')
     .exists().bail().withMessage({ message: "is not a string", field: "blogId" })
     .trim().bail().withMessage({ message: "wrong blogId", field: "blogId" })
-    .custom(input_validation_middleware_2.isBlogIdExist).withMessage({ message: "this blog id is already exist", field: "blogId" });
+    // .custom(isBlogIdExist).withMessage({message: "this blog id is already exist", field: "blogId" })
+    .custom((value) => __awaiter(void 0, void 0, void 0, function* () {
+    const isBlogIdExist = yield posts_repository_1.postsRepository.getPostByBlogsID(value);
+    if (isBlogIdExist)
+        throw new Error;
+    return true;
+})).withMessage({ "message": "wrong blogId", "field": "blogId" });
 /*
 type postType = {
     id: string,

@@ -10,14 +10,8 @@ export const nameValidation = body('name')
     .isLength({min: 1, max: 15}).bail().withMessage({"message": "wrong length name", "field": "name" })
 
 
-export let isBlogIdExist: CustomValidator = value => {
-     // @ts-ignore
-    return postsRepository.getPostByBlogsID(value).then(post => {
-         if (post){
-             return Promise.reject("BlogId is already exist")
-         }
-    })
-}
+
+
 
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
 

@@ -1,13 +1,26 @@
 import {Request, Response, Router} from "express";
-import {body, validationResult} from "express-validator";
+import {body, CustomValidator, validationResult} from "express-validator";
 import { inputValidationMiddleware} from "../middlewares/input-validation-middleware/input-validation-middleware";
 import {basicAuthMiddleware} from "../middlewares/basic-auth.middleware";
 
 import {postsRepository} from "../repositories/posts-repository";
 
-import {isBlogIdExist} from "../middlewares/input-validation-middleware/input-validation-middleware";
+//import {isBlogIdExist} from "../middlewares/input-validation-middleware/input-validation-middleware";
 
 export const postsRouter = Router({})
+
+// const isBlogIdExist: CustomValidator = value => {
+//     // @ts-ignore
+//     postsRepository.getPostByBlogsID(value).then(post => {
+//         if (post) {
+//             return Promise.reject('E-mail already in use');
+//         }
+//         else {
+//         }
+//     });
+// };
+
+
 
 const titleValidation = body('title')
     .exists().bail().withMessage({message: "title not exist", field: "title" })
@@ -27,7 +40,12 @@ const contentValidation = body('content')
 const blogIdValidation = body('blogId')
     .exists().bail().withMessage({message: "is not a string", field: "blogId" })
     .trim().bail().withMessage({message: "wrong blogId", field: "blogId" })
-    .custom(isBlogIdExist).withMessage({message: "this blog id is already exist", field: "blogId" })
+   // .custom(isBlogIdExist).withMessage({message: "this blog id is already exist", field: "blogId" })
+    .custom(async value => {
+        const isBlogIdExist = await postsRepository.getPostByBlogsID(value)
+        if (isBlogIdExist) throw new Error
+        return true
+    }).withMessage({"message": "wrong blogId", "field": "blogId" })
 
 
 /*
