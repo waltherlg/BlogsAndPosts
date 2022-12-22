@@ -15,6 +15,7 @@ const express_validator_1 = require("express-validator");
 const input_validation_middleware_1 = require("../middlewares/input-validation-middleware/input-validation-middleware");
 const basic_auth_middleware_1 = require("../middlewares/basic-auth.middleware");
 const posts_repository_1 = require("../repositories/posts-repository");
+const blogs_repository_1 = require("../repositories/blogs-repository");
 //import {isBlogIdExist} from "../middlewares/input-validation-middleware/input-validation-middleware";
 exports.postsRouter = (0, express_1.Router)({});
 // const isBlogIdExist: CustomValidator = value => {
@@ -45,17 +46,17 @@ const blogIdValidation = (0, express_validator_1.body)('blogId')
 const createBlogIdValidation = (0, express_validator_1.body)('blogId')
     .exists().bail().withMessage({ message: "is not a string", field: "blogId" })
     .trim().bail().withMessage({ message: "wrong blogId", field: "blogId" })
-    // .custom(async value => {
-    //     const isBlogIdExist = await blogsRepository.getBlogByID(value)
-    //     if (isBlogIdExist) throw new Error
-    //     return true
-    // }).withMessage({"message": "blogId already exist", "field": "blogId" })
     .custom((value) => __awaiter(void 0, void 0, void 0, function* () {
-    const isBlogIdExist = yield posts_repository_1.postsRepository.getPostByBlogsID(value);
+    const isBlogIdExist = yield blogs_repository_1.blogsRepository.getBlogByID(value);
     if (isBlogIdExist)
         throw new Error;
     return true;
-})).withMessage({ "message": "blogId exist", "field": "blogId" });
+})).withMessage({ "message": "blogId already exist", "field": "blogId" });
+// .custom(async value => {
+//     const isBlogIdExist = await postsRepository.getPostByBlogsID(value)
+//     if (isBlogIdExist) throw new Error
+//     return true
+// }).withMessage({"message": "blogId exist", "field": "blogId" })
 /*
 type postType = {
     id: string,
