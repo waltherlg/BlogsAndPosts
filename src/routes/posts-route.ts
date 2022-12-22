@@ -42,6 +42,10 @@ const blogIdValidation = body('blogId')
     .exists().bail().withMessage({message: "is not a string", field: "blogId" })
     .trim().bail().withMessage({message: "wrong blogId", field: "blogId" })
 
+const createBlogIdValidation = body('blogId')
+    .exists().bail().withMessage({message: "is not a string", field: "blogId" })
+    .trim().bail().withMessage({message: "wrong blogId", field: "blogId" })
+
 
     .custom(async value => {
         const isBlogIdExist = await blogsRepository.getBlogByID(value)
@@ -130,7 +134,7 @@ postsRouter.post('/',
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
-    blogIdValidation,
+    createBlogIdValidation,
     inputValidationMiddleware,
     (req: Request, res: Response) => {
         const newPost = postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)

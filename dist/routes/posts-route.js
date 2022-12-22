@@ -42,6 +42,9 @@ const contentValidation = (0, express_validator_1.body)('content')
     .isLength({ max: 1000 }).bail().withMessage({ message: "wrong content", field: "content" });
 const blogIdValidation = (0, express_validator_1.body)('blogId')
     .exists().bail().withMessage({ message: "is not a string", field: "blogId" })
+    .trim().bail().withMessage({ message: "wrong blogId", field: "blogId" });
+const createBlogIdValidation = (0, express_validator_1.body)('blogId')
+    .exists().bail().withMessage({ message: "is not a string", field: "blogId" })
     .trim().bail().withMessage({ message: "wrong blogId", field: "blogId" })
     .custom((value) => __awaiter(void 0, void 0, void 0, function* () {
     const isBlogIdExist = yield blogs_repository_1.blogsRepository.getBlogByID(value);
@@ -118,7 +121,7 @@ exports.postsRouter.get('/blogid/:id', (req, res) => {
     }
 });
 // POST add blogs
-exports.postsRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, titleValidation, shortDescriptionValidation, contentValidation, blogIdValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
+exports.postsRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, titleValidation, shortDescriptionValidation, contentValidation, createBlogIdValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
     const newPost = posts_repository_1.postsRepository.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.blogId);
     res.status(201).send(newPost);
     // const newPost: any = {
