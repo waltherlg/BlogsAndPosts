@@ -48,7 +48,7 @@ const blogIdValidation = (0, express_validator_1.body)('blogId')
     if (isBlogIdExist)
         throw new Error;
     return true;
-})).withMessage({ "message": "wrong blogId", "field": "blogId" });
+})).withMessage({ "message": "blogId already exist", "field": "blogId" });
 /*
 type postType = {
     id: string,

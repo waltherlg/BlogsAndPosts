@@ -45,7 +45,7 @@ const blogIdValidation = body('blogId')
         const isBlogIdExist = await postsRepository.getPostByBlogsID(value)
         if (isBlogIdExist) throw new Error
         return true
-    }).withMessage({"message": "wrong blogId", "field": "blogId" })
+    }).withMessage({"message": "blogId already exist", "field": "blogId" })
 
 
 /*
