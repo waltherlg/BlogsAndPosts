@@ -136,7 +136,7 @@ exports.postsRouter.post('/', basic_auth_middleware_1.basicAuthMiddleware, title
     // res.status(201).send(newPost)
 });
 // PUT update post
-exports.postsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, shortDescriptionValidation, titleValidation, contentValidation, blogIdValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
+exports.postsRouter.put('/:id', basic_auth_middleware_1.basicAuthMiddleware, shortDescriptionValidation, titleValidation, contentValidation, createBlogIdValidation, input_validation_middleware_1.inputValidationMiddleware, (req, res) => {
     const updatePost = posts_repository_1.postsRepository.updatePost(req.params.id, req.body.title, req.body.shortDescription, req.body.content, req.body.blogId);
     if (updatePost) {
         // const post = blogsRepository.getBlogByID(req.params.id)
